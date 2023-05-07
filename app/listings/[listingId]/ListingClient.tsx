@@ -1,7 +1,6 @@
 'use client'
 
-import { Reservation } from "@prisma/client"
-import { SafeUser, safeListing } from "@/app/types";
+import { SafeReservation, SafeUser, safeListing } from "@/app/types";
 import { useCallback, useEffect, useMemo, useState } from "react";
 import { categories } from "@/app/components/navbar/Categories";
 import Container from "@/app/components/Container";
@@ -13,6 +12,7 @@ import { useRouter } from "next/navigation";
 import { differenceInCalendarDays, differenceInDays, eachDayOfInterval } from "date-fns";
 import axios from "axios";
 import toast from "react-hot-toast";
+import { Range } from "react-date-range";
 
 const initialDateRange = {
     startDate: new Date(),
@@ -21,7 +21,7 @@ const initialDateRange = {
 }
 
 interface ListingClientProps {
-    reservations?: Reservation[];
+    reservations?: SafeReservation[];
     listing: safeListing & {
         user: SafeUser
     }
@@ -53,7 +53,7 @@ const ListingClient: React.FC<ListingClientProps> = ({
 
     const [isLoading, setIsLoading] = useState(false);
     const [totalPrice, setTotalPrice] = useState(listing.price);
-    const [dateRange, setDateRange] = useState(initialDateRange);
+    const [dateRange, setDateRange] = useState<Range>(initialDateRange);
 
     const onCreateReservation = useCallback(() => {
         if(!currentUser) {
@@ -72,8 +72,7 @@ const ListingClient: React.FC<ListingClientProps> = ({
         .then(() => {
             toast.success('Listing reserved!');
             setDateRange(initialDateRange)
-            //Redirect to /trips
-            router.refresh();
+            router.push('/trips');
         })
         .catch(()=> {
             toast.error('Something went wrong.');
@@ -96,7 +95,7 @@ useEffect(() => {
         const dayCount = differenceInCalendarDays(
             dateRange.endDate,
             dateRange.startDate
-        )
+        )+1;
 
         if(dayCount && listing.price) {
             setTotalPrice(dayCount*listing.price);
@@ -146,7 +145,7 @@ useEffect(() => {
                 ">
                     <ListingReservation 
                     price ={listing.price}
-                    total ={totalPrice}
+                    totalPrice ={totalPrice}
                     onChangeDate={(value) => setDateRange(value)}
                     dateRange={dateRange}
                     onSubmit= {onCreateReservation}
