@@ -1,5 +1,5 @@
 'use client';
-import { useCallback, useState } from "react";
+import { useCallback, useState, useRef, useEffect } from "react";
 import { AiOutlineMenu } from "react-icons/ai";
 import Avatar from "../Avatar";
 import MenuItem from "./MenuItem";
@@ -26,6 +26,7 @@ const UserMenu: React.FC<UserMenuProps> = ({
     const rentModal = useRentModal();
 
     const [isOpen, setIsOpen] = useState(false);
+    const divEl = useRef(null);
 
     const toggleOpen = useCallback(() => {
         setIsOpen((value) => !value)
@@ -38,6 +39,23 @@ const UserMenu: React.FC<UserMenuProps> = ({
        rentModal.onOpen();
     },[currentUser, LoginModal, rentModal])
 
+
+    useEffect(() => {
+        const handler = (event:Event) =>{
+            
+            if(divEl.current == null) return 
+            
+            if(!divEl.current.contains(event.target))
+            {
+                setIsOpen(false)
+            }
+        }
+        document.addEventListener('click', handler, true);
+
+        return () =>{
+         document.removeEventListener('click', handler);
+        }
+    },[])
     return (
         <div className="relative">
             <div className="flex flex-row items-center gap-3">
@@ -89,7 +107,7 @@ const UserMenu: React.FC<UserMenuProps> = ({
                 top-12
                 text-sm"
                 >
-                    <div className="flex flex-col cursor-pointer">
+                    <div ref={divEl}className="flex flex-col cursor-pointer">
                         {currentUser ? 
                         (
                             <>
