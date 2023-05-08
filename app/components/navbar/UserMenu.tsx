@@ -26,7 +26,7 @@ const UserMenu: React.FC<UserMenuProps> = ({
     const rentModal = useRentModal();
 
     const [isOpen, setIsOpen] = useState(false);
-    const divEl = useRef(null);
+    const divEl = useRef<HTMLElement>(null);
 
     const toggleOpen = useCallback(() => {
         setIsOpen((value) => !value)
@@ -45,7 +45,7 @@ const UserMenu: React.FC<UserMenuProps> = ({
             
             if(divEl.current == null) return 
             
-            if(!divEl.current.contains(event.target))
+            if(!divEl.current.contains(event.target as Node))
             {
                 setIsOpen(false)
             }
