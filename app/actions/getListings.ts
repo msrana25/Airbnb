@@ -1,5 +1,4 @@
 import prisma from "@/app/libs/prismadb"
-import { NumberLiteralType } from "typescript";
 
 export interface IListingsParams {
     userId?: string;
@@ -17,7 +16,8 @@ export default async function getListings(
     params: IListingsParams
 ) {
     try {
-        const { userId,
+        const { 
+        userId,
         roomCount,
         guestCount,
         bathroomCount,
@@ -98,3 +98,4 @@ export default async function getListings(
         throw new Error(error);
     }
 }
+
