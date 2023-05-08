@@ -112,7 +112,7 @@ const reservationDate = useMemo (() => {
                     ${price}
                 </div>
                 {!reservation && 
-                (<div className="font-light"> night</div>
+                (<div className="font-light"> /night</div>
             )}
             </div>
             {onAction && actionLabel && (

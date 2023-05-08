@@ -80,7 +80,7 @@ export const categories = [
     {
         label : 'Cave',
         icon : GiCaveEntrance,
-        description: 'This property in a cave!'
+        description: 'This property is in a cave!'
 
     },
     {
