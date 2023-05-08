@@ -38,7 +38,7 @@ const Home = async (
         2xl:grid-cols-6
         gap-8
         ">
-          {listings.map((listing) => {
+          {listings.map((listing:any) => {
             return (
               <ListingCard
               currentUser ={currentUser}
