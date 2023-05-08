@@ -26,7 +26,7 @@ const UserMenu: React.FC<UserMenuProps> = ({
     const rentModal = useRentModal();
 
     const [isOpen, setIsOpen] = useState(false);
-    const divEl = useRef<HTMLElement>(null);
+    const divEl = useRef<HTMLDivElement>(null);
 
     const toggleOpen = useCallback(() => {
         setIsOpen((value) => !value)
@@ -51,13 +51,9 @@ const UserMenu: React.FC<UserMenuProps> = ({
             }
         }
         document.addEventListener('click', handler, true);
-
-        return () =>{
-         document.removeEventListener('click', handler);
-        }
-    },[])
+ },[])
     return (
-        <div className="relative">
+        <div ref={divEl}  className="relative">
             <div className="flex flex-row items-center gap-3">
                 <div
                     onClick={onRent}
@@ -107,7 +103,7 @@ const UserMenu: React.FC<UserMenuProps> = ({
                 top-12
                 text-sm"
                 >
-                    <div ref={divEl}className="flex flex-col cursor-pointer">
+                    <div className="flex flex-col cursor-pointer">
                         {currentUser ? 
                         (
                             <>
