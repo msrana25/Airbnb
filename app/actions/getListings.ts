@@ -12,6 +12,16 @@ export interface IListingsParams {
 }
 
 
+function shuffleArray(array: any) {
+    for (let i = array.length - 1; i > 0; i--) {
+      const j = Math.floor(Math.random() * (i + 1));
+      [array[i], array[j]] = [array[j], array[i]];
+    }
+    return array;
+}
+
+
+
 export default async function getListings( 
     params: IListingsParams
 ) {
@@ -87,7 +97,9 @@ export default async function getListings(
             }
         })
 
-        const safeListings = listings.map((listing) => ({
+        const shuffledListings = shuffleArray([...listings]);
+
+        const safeListings = shuffledListings.map((listing:any) => ({
             ...listing,
             createdAt: listing.createdAt.toISOString(),
         }))
