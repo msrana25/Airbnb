@@ -47,7 +47,7 @@ const useFavorite = ({
              }
 
              await request();
-             router.refresh();
+             router.push('/');
              toast.success('Success')
             }
 
